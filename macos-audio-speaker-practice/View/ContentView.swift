@@ -13,13 +13,15 @@ struct ContentView: View {
   
     @ViewBuilder var body: some View {
       let devices = presenter.getOutputDevices()
+      let defaultDevice = presenter.getDefaultOutputDevice()
       VStack(alignment: .leading) {
         Text(verbatim: "Output Devices")
         Divider()
+        
         if let outputDevices = devices {
           VStack(alignment: .leading) {
             ForEach(outputDevices.sorted(by: >), id: \.key) { key, value in
-              Text(verbatim: "DeviceId:\(key), Name:\(value)")
+              Text(verbatim: "DeviceId:\(key), Name:\(value), volume:\(presenter.getDeviceVolume(deviceID: key)), default: \(defaultDevice == key)")
             }
           }
         } else {

@@ -79,5 +79,75 @@ class ContentPresenter {
       
       return propertySize / UInt32(MemoryLayout<AudioDeviceID>.size)
   }
+  
+  func getDeviceVolume(deviceID: AudioDeviceID) -> [Float] {
+      let channelsCount = 2
+      var channels = [UInt32](repeating: 0, count: channelsCount)
+      var propertySize = UInt32(MemoryLayout<UInt32>.size * channelsCount)
+      var leftLevel = Float32(-1)
+      var rigthLevel = Float32(-1)
+      
+      var propertyAddress = AudioObjectPropertyAddress(
+          mSelector: AudioObjectPropertySelector(kAudioDevicePropertyPreferredChannelsForStereo),
+          mScope: AudioObjectPropertyScope(kAudioDevicePropertyScopeOutput),
+          mElement: AudioObjectPropertyElement(kAudioObjectPropertyElementMaster))
+      
+      let status = AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &propertySize, &channels)
+      
+      if status != noErr { return [-1] }
+      
+      propertyAddress.mSelector = kAudioDevicePropertyVolumeScalar
+      propertySize = UInt32(MemoryLayout<Float32>.size)
+      propertyAddress.mElement = channels[0]
+      
+      AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &propertySize, &leftLevel)
+      
+      propertyAddress.mElement = channels[1]
+      
+      AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &propertySize, &rigthLevel)
+      
+      return [leftLevel, rigthLevel]
+  }
+  
+  func setDeviceVolume(deviceID: AudioDeviceID, leftChannelLevel: Float, rightChannelLevel: Float) {
+      let channelsCount = 2
+      var channels = [UInt32](repeating: 0, count: channelsCount)
+      var propertySize = UInt32(MemoryLayout<UInt32>.size * channelsCount)
+      var leftLevel = leftChannelLevel
+      var rigthLevel = rightChannelLevel
+      
+      var propertyAddress = AudioObjectPropertyAddress(
+          mSelector: AudioObjectPropertySelector(kAudioDevicePropertyPreferredChannelsForStereo),
+          mScope: AudioObjectPropertyScope(kAudioDevicePropertyScopeOutput),
+          mElement: AudioObjectPropertyElement(kAudioObjectPropertyElementMaster))
+      
+      let status = AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &propertySize, &channels)
+      
+      if status != noErr { return }
+      
+      propertyAddress.mSelector = kAudioDevicePropertyVolumeScalar
+      propertySize = UInt32(MemoryLayout<Float32>.size)
+      propertyAddress.mElement = channels[0]
+      
+      AudioObjectSetPropertyData(deviceID, &propertyAddress, 0, nil, propertySize, &leftLevel)
+      
+      propertyAddress.mElement = channels[1]
+      
+      AudioObjectSetPropertyData(deviceID, &propertyAddress, 0, nil, propertySize, &rigthLevel)
+  }
+  
+  func getDefaultOutputDevice() -> AudioDeviceID {
+          var propertySize = UInt32(MemoryLayout<AudioDeviceID>.size)
+          var deviceID = kAudioDeviceUnknown
+          
+          var propertyAddress = AudioObjectPropertyAddress(
+              mSelector: AudioObjectPropertySelector(kAudioHardwarePropertyDefaultOutputDevice),
+              mScope: AudioObjectPropertyScope(kAudioObjectPropertyScopeGlobal),
+              mElement: AudioObjectPropertyElement(kAudioObjectPropertyElementMaster))
+          
+          AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &propertyAddress, 0, nil, &propertySize, &deviceID)
+          
+          return deviceID
+      }
 }
 
