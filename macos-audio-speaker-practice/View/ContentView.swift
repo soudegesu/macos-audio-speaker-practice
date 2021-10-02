@@ -13,14 +13,18 @@ struct ContentView: View {
   
     @ViewBuilder var body: some View {
       let devices = presenter.getOutputDevices()
-      if let outputDevices = devices {
-        VStack {
-          ForEach(outputDevices.sorted(by: >), id: \.key) { key, value in
-            Text(verbatim: "DeviceId:\(key), Name:\(value)")
+      VStack(alignment: .leading) {
+        Text(verbatim: "Output Devices")
+        Divider()
+        if let outputDevices = devices {
+          VStack(alignment: .leading) {
+            ForEach(outputDevices.sorted(by: >), id: \.key) { key, value in
+              Text(verbatim: "DeviceId:\(key), Name:\(value)")
+            }
           }
+        } else {
+          Text("No output devices")
         }
-      } else {
-        Text("No output devices")
       }
     }
 }
