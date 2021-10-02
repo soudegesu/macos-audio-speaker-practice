@@ -12,6 +12,7 @@
 		9BABC1442707E25200D08CEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BABC1432707E25200D08CEC /* Assets.xcassets */; };
 		9BABC1472707E25200D08CEC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BABC1462707E25200D08CEC /* Preview Assets.xcassets */; };
 		9BABC14A2707E25200D08CEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BABC1482707E25200D08CEC /* Main.storyboard */; };
+		9BABC1572708806C00D08CEC /* ContentPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BABC1562708806C00D08CEC /* ContentPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		9BABC1492707E25200D08CEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9BABC14B2707E25200D08CEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BABC14C2707E25200D08CEC /* macos_audio_speaker_practice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macos_audio_speaker_practice.entitlements; sourceTree = "<group>"; };
+		9BABC1562708806C00D08CEC /* ContentPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +57,9 @@
 		9BABC13E2707E25100D08CEC /* macos-audio-speaker-practice */ = {
 			isa = PBXGroup;
 			children = (
+				9BABC1552708805F00D08CEC /* Presenter */,
+				9BABC1542708804C00D08CEC /* View */,
 				9BABC13F2707E25100D08CEC /* AppDelegate.swift */,
-				9BABC1412707E25100D08CEC /* ContentView.swift */,
 				9BABC1432707E25200D08CEC /* Assets.xcassets */,
 				9BABC1482707E25200D08CEC /* Main.storyboard */,
 				9BABC14B2707E25200D08CEC /* Info.plist */,
@@ -72,6 +75,22 @@
 				9BABC1462707E25200D08CEC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9BABC1542708804C00D08CEC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9BABC1412707E25100D08CEC /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9BABC1552708805F00D08CEC /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				9BABC1562708806C00D08CEC /* ContentPresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +165,7 @@
 			files = (
 				9BABC1422707E25100D08CEC /* ContentView.swift in Sources */,
 				9BABC1402707E25100D08CEC /* AppDelegate.swift in Sources */,
+				9BABC1572708806C00D08CEC /* ContentPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
